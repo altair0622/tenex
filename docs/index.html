@@ -31,6 +31,12 @@
     .footer { margin-top: 3rem; color: #484f58; font-size: .8rem; }
     a { color: #58a6ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    .definitions { margin-top: 2rem; }
+    .def-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: .75rem; margin-top: .75rem; }
+    .def-item { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 1rem; }
+    .def-name { font-size: .85rem; font-weight: 700; color: #58a6ff; margin-bottom: .35rem; font-family: monospace; }
+    .def-desc { font-size: .82rem; color: #8b949e; line-height: 1.5; }
+    .def-formula { font-size: .78rem; color: #484f58; margin-top: .3rem; font-family: monospace; }
   </style>
 </head>
 <body>
@@ -81,9 +87,91 @@
 </tbody>
     </table>
 
+  <div class="definitions">
+    <h2>Column Definitions</h2>
+    <div class="def-grid">
+
+      <div class="def-item">
+        <div class="def-name">avg_daily_roi_pct</div>
+        <div class="def-desc">
+          <strong>Primary ranking metric.</strong> Average daily return on capital actually deployed,
+          after fees. Measures how efficiently the model uses the capital it commits to trades.
+        </div>
+        <div class="def-formula">mean( daily_pnl / daily_notional ) x 100</div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">positive_day_ratio</div>
+        <div class="def-desc">
+          Fraction of trading days that ended with a net profit.
+          A high ratio means the model wins consistently day-to-day, not just on a few lucky days.
+        </div>
+        <div class="def-formula">profitable days / total eval days</div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">win_rate</div>
+        <div class="def-desc">
+          Fraction of individual trades that were profitable (net of fees).
+          Different from positive_day_ratio — a day with many small wins and one big loss
+          can be a negative day but still have a high win_rate.
+        </div>
+        <div class="def-formula">winning trades / total trades</div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">total_trades</div>
+        <div class="def-desc">
+          Total number of trades executed during the evaluation period.
+          Low trade counts make other metrics less statistically reliable.
+          Minimum required: <strong>15 trades</strong>.
+        </div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">max_drawdown_pct</div>
+        <div class="def-desc">
+          Largest peak-to-trough decline in the equity curve during the eval period.
+          Expressed as a percentage. Closer to 0% is better —
+          it measures the worst losing streak the model experienced.
+        </div>
+        <div class="def-formula">( trough_equity - peak_equity ) / peak_equity x 100</div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">eval_days</div>
+        <div class="def-desc">
+          Number of distinct trading days included in the backtest evaluation.
+          More days = more reliable estimate of real performance.
+          Minimum required: <strong>5 days</strong>.
+        </div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">model_id / version</div>
+        <div class="def-desc">
+          <strong>ote_long</strong>: ICT/Smart Money rule-based strategy. Detects swing pivots,
+          enters on Fibonacci OTE zone (62–79%) retracement with momentum confirmation.<br/><br/>
+          <strong>rf_tp</strong>: Random Forest classifier. Predicts probability of price
+          hitting a take-profit target within H minutes. Enters when confidence &ge; threshold.
+        </div>
+      </div>
+
+      <div class="def-item">
+        <div class="def-name">symbol</div>
+        <div class="def-desc">
+          The ETF/stock ticker the model was evaluated on.
+          Each model is tested independently on SPY, QQQ, IWM, SOXL, and TQQQ.
+          The leaderboard shows the best (model &times; symbol) combination.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="footer">
-    Last updated: 2026-05-13 16:42 ET &nbsp;|&nbsp;
-    <a href="https://github.com/tenexhan/TenEx" target="_blank">GitHub →</a>
+    Last updated: 2026-05-13 16:48 ET &nbsp;|&nbsp;
+    <a href="https://github.com/altair0622/tenex" target="_blank">GitHub</a>
   </div>
 </body>
 </html>

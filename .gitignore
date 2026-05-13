@@ -1,31 +1,47 @@
-# Python
+# -------------------------------------------------------
+# Strategy code — keep local, do NOT publish
+# -------------------------------------------------------
+*.py
+*.ipynb
+
+# -------------------------------------------------------
+# Python artifacts
+# -------------------------------------------------------
 __pycache__/
 *.py[cod]
 *.pyo
 .ipynb_checkpoints/
 
+# -------------------------------------------------------
 # Environment / secrets
+# -------------------------------------------------------
 .env
 *.env
 secrets.json
 
+# -------------------------------------------------------
 # Claude local settings
+# -------------------------------------------------------
 .claude/
 
-# Generated outputs (large / auto-generated, don't need version control)
+# -------------------------------------------------------
+# Generated / large outputs
+# -------------------------------------------------------
 selector_out*/
 params_out/
 catboost_info/
 live_logs_*/
 dataset/
-
-# Old archive
 Archive/
 webull-master_han/
 
+# -------------------------------------------------------
 # OS
+# -------------------------------------------------------
 .DS_Store
 Thumbs.db
 
-# Registry snapshots — keep all_results.csv + champion.json, exclude per-run snapshots
+# -------------------------------------------------------
+# Registry — only keep cumulative CSV + champion, not per-run snapshots
+# -------------------------------------------------------
 registry/run_*.csv
